@@ -1,10 +1,21 @@
-import { Button } from '@/components/ui/button'
+import { RouterProvider, createBrowserRouter,Route, createRoutesFromElements } from 'react-router-dom'
+import Root from './pages/Root';
+
+
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route index element={<Root/>} />
+    </Route>
+  )
+);
 
 function App() {
 
   return (
     <>
-    <Button onClick={()=>console.log('hello world')}>hello world</Button>
+    <RouterProvider router={router}></RouterProvider>
     </>
   )
 }
