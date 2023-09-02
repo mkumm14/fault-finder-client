@@ -1,6 +1,6 @@
 "use client"
 
-import { Link, NavLink } from "react-router-dom"
+import {  NavLink } from "react-router-dom"
 
 
 import { cn } from "@/lib/utils"
@@ -23,9 +23,9 @@ export function DashboardNav({ items }: DashboardNavProps) {
                 const Icon = Icons[item.icon || "arrowRight"]
                 return (
                     item.href && (
-                        <NavLink key={index} className={({ isActive, isPending }) =>
+                        <NavLink key={index} className={({ isActive }) =>
                             isActive
-                                ? "bg-accent"
+                                ? "bg-accent rounded-md"
                                     : "transparent"
                         } to={item.disabled ? "/" : item.href}>
                             <span
