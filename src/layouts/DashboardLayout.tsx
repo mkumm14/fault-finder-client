@@ -5,9 +5,6 @@ import { UserAccountNav } from "@/components/user-account-nav"
 import {ModeToggle} from "@/components/mode-toggle";
 import { Outlet } from "react-router-dom";
 
-interface DashboardLayoutProps {
-    children?: React.ReactNode
-}
 
 export default function DashboardLayout() {
 
