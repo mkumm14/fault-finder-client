@@ -17,18 +17,17 @@ import PublicRoute from './lib/PublicRoute';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path='/' element={<Root />} ></Route>
-
-      <Route element={<PublicRoute/>}>
-      <Route path='login' element={<LoginPage />}></Route>
-      <Route path='sign-up' element={<SignUpPage />}></Route>
-      </Route>
-      <Route element={<DashboardLayout />}>
-        <Route element={<PrivateRoute />}>
-          <Route path='dashboard' element={<Dashboard />}></Route>
-          <Route path='projects' element={<Projects />}></Route>
+        <Route path='/' element={<Root />} ></Route>
+        <Route element={<PublicRoute />}>
+          <Route path='login' element={<LoginPage />}></Route>
+          <Route path='sign-up' element={<SignUpPage />}></Route>
         </Route>
-      </Route>
+        <Route element={<DashboardLayout />}>
+          <Route element={<PrivateRoute />}>
+            <Route path='dashboard' element={<Dashboard />}></Route>
+            <Route path='projects' element={<Projects />}></Route>
+          </Route>
+        </Route>
     </Route>
   )
 );
@@ -39,8 +38,8 @@ function App() {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Provider store={store}>
-        <Toaster />
-        <RouterProvider router={router}></RouterProvider>
+          <Toaster />
+          <RouterProvider router={router}></RouterProvider>
         </Provider>
       </ThemeProvider>
     </>
