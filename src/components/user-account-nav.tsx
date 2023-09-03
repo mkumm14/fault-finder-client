@@ -8,9 +8,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { UserAvatar } from "@/components/user-avatar"
+import { logout as setLogout } from '@/features/auth-slice';
 
 
 import {useToast} from "@/components/ui/use-toast";
+import { useLogoutMutation, useRetrieveUserQuery } from "@/features/auth-api-slice";
+import { useAppDispatch } from "@/hooks/hooks";
 
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,26 +22,27 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
 
-    // const {data:AppUser} =  useRetrieveUserQuery();
 
-    // const dispatch = useAppDispatch();
+    const {data:AppUser, isLoading} =  useRetrieveUserQuery();
+
+    const dispatch = useAppDispatch();
 
 
-    // const [logout] = useLogoutMutation();
+    const [logout] = useLogoutMutation();
 
-    // const router= useRouter()
     const {toast} = useToast()
 
 
     const handleLogout = async () => {
 
         try {
-            // await logout(undefined).unwrap();
-            // dispatch(setLogout());
-            // toast({
-            //     description: "Logged out successfully"
-            // })
-            // router.refresh()
+            await logout(undefined).unwrap();
+            dispatch(setLogout());
+            toast({
+                description: "Logged out successfully"
+            })
+
+            location.reload()
 
         }catch (error:any)
         {
@@ -48,22 +52,21 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 
 
     };
-
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <UserAvatar
-                    user={{ name: user?.username || null, image: user.image || null }}
+                    user={{ name: AppUser?.username || null, image: user.image || null }}
                     className="h-8 w-8"
                 />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                        {user?.username && <p className="font-medium">{user?.username}</p>}
-                        {user?.email && (
+                        {AppUser?.username && <p className="font-medium">{AppUser?.username}</p>}
+                        {AppUser?.email && (
                             <p className="w-[200px] truncate text-sm text-muted-foreground">
-                                {user?.email}
+                                {AppUser?.email}
                             </p>
                         )}
                     </div>

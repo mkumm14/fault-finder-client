@@ -1,10 +1,10 @@
 "use client"
 
-import { Link } from "react-router-dom"
-import {zodResolver} from "@hookform/resolvers/zod"
+import { Link, useNavigate } from "react-router-dom"
+import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -13,9 +13,12 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
-import {useForm} from "react-hook-form";
-import {useToast} from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input"
+import { useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/use-toast";
+import { useLoginMutation } from "@/features/auth-api-slice"
+import { useAppDispatch } from "@/hooks/hooks"
+import { setAuth } from "@/features/auth-slice"
 
 const formSchema = z.object({
     username: z.string().nonempty({
@@ -36,19 +39,28 @@ export default function LoginPage() {
         },
     })
 
-    const {toast} = useToast()
+    const { toast } = useToast()
 
+    const [login, { isLoading }] = useLoginMutation();
 
+    const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-
-        const {username,password} = values;
+        const { username, password } = values;
         try {
+            const response = await login({ username, password }).unwrap();
+            console.log(response.data); // Log the response data
+            dispatch(setAuth())
+            toast({
+                description: "Logged in successfully"
+            });
 
-            console.log(username+" "+password)
-
+            navigate('/dashboard');
         } catch (error: any) {
+            
             if (error.data) {
                 const errors = error.data as Record<string, string[]>;
                 for (let [field, errorArray] of Object.entries(errors)) {
@@ -85,26 +97,26 @@ export default function LoginPage() {
                         <FormField
                             control={form.control}
                             name="username"
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Username/email</FormLabel>
                                     <FormControl>
                                         <Input placeholder="username or email" {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name="password"
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input placeholder="password" type={'password'} {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
