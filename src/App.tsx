@@ -11,6 +11,7 @@ import PrivateRoute from './lib/PrivateRoute';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import PublicRoute from './lib/PublicRoute';
+import RootLayout from './layouts/RootLayout';
 
 
 
@@ -38,8 +39,10 @@ function App() {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Provider store={store}>
+          <RootLayout>
           <Toaster />
           <RouterProvider router={router}></RouterProvider>
+          </RootLayout>
         </Provider>
       </ThemeProvider>
     </>

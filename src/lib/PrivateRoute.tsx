@@ -1,17 +1,13 @@
-import LoadingSpinner from "@/components/LoadingSpinner";
-import { useRetrieveUserQuery } from "@/features/auth-api-slice";
+import { useAppSelector } from "@/hooks/hooks";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute= ()=>{
 
-    const {data:AppUser, isLoading} =  useRetrieveUserQuery();
 
-    if (isLoading) {
-        return <LoadingSpinner />;
-    }
+    const isAuthenticated = useAppSelector(state=>state.auth.isAuthenticated)
     
     return (
-        AppUser ? <Outlet/> : <Navigate to='/login'/>
+        isAuthenticated ? <Outlet/> : <Navigate to='/login'/>
     )
 }
 
