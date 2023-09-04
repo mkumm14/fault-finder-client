@@ -1,6 +1,6 @@
 "use client"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as z from "zod"
 
@@ -54,34 +54,64 @@ export default function SignUpPage() {
 
     const {toast} = useToast()
 
+    const navigate = useNavigate();
 
-
-    // 2. Define a submit handler.
-     async function onSubmit(values: z.infer<typeof formSchema>) {
-
-
-        const {first_name, last_name, username, email, password1, password2 } = values;
-
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const { first_name, last_name, username, email, password1, password2 } = values;
+    
         try {
-            console.log(first_name, last_name, username, email, password1, password2)
-        } catch (error:any) {
-
-            if (error.data) {
-                const errors = error.data as Record<string, string[]>;
+            const response = await fetch('http://localhost:8000/auth/registration/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    first_name, 
+                    last_name, 
+                    username, 
+                    email, 
+                    password1, 
+                    password2 
+                }),
+                credentials:"include"
+            });
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                // Check for any error messages and display them
+                const errors = data as Record<string,string[]>;
                 for (let [field, errorArray] of Object.entries(errors)) {
-
                     toast({
                         variant: "destructive",
                         className:'mb-5',
                         description:`${errorArray[0]}`
                     })
                 }
+            } else {
+                toast({
+                    description: "Registered successfully"
+                });
+                navigate('/login')
 
             }
-        }
 
-        form.reset()
+    
+        } catch (error: any) {
+            console.error("An error occurred:", error);
+            // We'll retain this error message for unexpected errors.
+            toast({
+                variant: "destructive",
+                className: 'mb-5',
+                description: "An unexpected error occurred. Please try again."
+            });
+        }
+    
+        form.reset();
     }
+    
+    
+    
 
     return (
 

@@ -46,7 +46,6 @@ const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { first_name, last_name, email, username,password1, password2 },
             }),
-            invalidatesTags: ['User'],
         }),
 
         logout: builder.mutation({

@@ -41,43 +41,71 @@ export default function LoginPage() {
 
     const { toast } = useToast()
 
-    const [login, { isLoading }] = useLoginMutation();
 
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
 
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const { username, password } = values;
+    
         try {
-            const response = await login({ username, password }).unwrap();
-            console.log(response.data); // Log the response data
-            dispatch(setAuth())
-            toast({
-                description: "Logged in successfully"
+            const response = await fetch('http://localhost:8000/auth/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+                credentials:"include"
             });
-
-            navigate('/dashboard');
-        } catch (error: any) {
-            
-            if (error.data) {
-                const errors = error.data as Record<string, string[]>;
-                for (let [field, errorArray] of Object.entries(errors)) {
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                
+                if (errorData && typeof errorData === "object") {
+                    for (let [field, errorArray] of Object.entries(errorData)) {
+                        // Use a type assertion for errorArray
+                        const messages = errorArray as string[];
+                        toast({
+                            variant: "destructive",
+                            className: 'mb-5',
+                            description: `${messages[0]}`
+                        });
+                    }
+                } else {
                     toast({
                         variant: "destructive",
                         className: 'mb-5',
-                        description: `${errorArray[0]}`
-                    })
+                        description: "An unknown error occurred."
+                    });
                 }
-
+                return;  // Exit early after handling error
             }
-
+    
+            dispatch(setAuth());
+            toast({
+                description: "Logged in successfully"
+            });
+    
+            navigate('/dashboard');
+    
+        } catch (error: any) {
+            console.log(error);
+            toast({
+                variant: "destructive",
+                className: 'mb-5',
+                description: "An unexpected error occurred. Please try again."
+            });
         }
-
-        form.reset();  // You may choose to reset or not based on your requirements
+    
+        form.reset();
     }
-
+    
+    
+    
+    
 
     return (
 

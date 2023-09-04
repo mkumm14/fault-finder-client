@@ -13,7 +13,7 @@ import { logout as setLogout } from '@/features/auth-slice';
 
 import {useToast} from "@/components/ui/use-toast";
 import { useLogoutMutation, useRetrieveUserQuery } from "@/features/auth-api-slice";
-import { useAppDispatch } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -22,8 +22,9 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
 
+    const isAuthenticated  = useAppSelector(state=>state.auth.isAuthenticated)
 
-    const {data:AppUser, isLoading} =  useRetrieveUserQuery();
+    const {data:AppUser, isLoading} =  useRetrieveUserQuery(undefined,{skip:!isAuthenticated});
 
     const dispatch = useAppDispatch();
 
@@ -44,7 +45,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                 description: "Logged out successfully"
             })
 
-            navigate('/login')
+            location.reload()
 
         }catch (error:any)
         {
