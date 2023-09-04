@@ -20,7 +20,13 @@ const baseQueryWithReauth: BaseQueryFn<
     await mutex.waitForUnlock();
     let result = await baseQuery(args, api, extraOptions);
 
-    if (result.error && result.error.status === 401) {
+
+    const isAuthError = (error: any): error is { detail: string } => {
+        return error && typeof error.detail === 'string';
+    };
+    if (result.error && result.error.status === 401 &&
+        isAuthError(result.error.data)  &&
+        result.error.data.detail === "Authentication credentials were not provided.") {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {
@@ -28,8 +34,8 @@ const baseQueryWithReauth: BaseQueryFn<
                     {
                         url: 'auth/token/refresh/',
                         method: 'POST',
-                        body:{},
-                        credentials:'include'
+                        body: {},
+                        credentials: 'include'
                     },
                     api,
                     extraOptions
@@ -49,9 +55,8 @@ const baseQueryWithReauth: BaseQueryFn<
             result = await baseQuery(args, api, extraOptions);
         }
     }
-    else
-    {
-         api.dispatch(setAuth());
+    else {
+        api.dispatch(setAuth());
 
     }
     return result;
@@ -61,5 +66,5 @@ export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
     endpoints: builder => ({}),
-    tagTypes:['User','Projects']
+    tagTypes: ['User', 'Projects']
 });
