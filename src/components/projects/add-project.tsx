@@ -49,7 +49,12 @@ export default function AddProject() {
                                 Description
                             </Label>
                             <Textarea id='description' />
-
+                        </div>
+                        <div className="grid  gap-4">
+                            <Label htmlFor="description" >
+                                Description
+                            </Label>
+                            <Textarea id='description' />
                         </div>
                     </div>
                     <SheetFooter>

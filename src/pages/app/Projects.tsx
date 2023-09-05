@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table"
 import { useRetrieveUserProjectQuery } from "@/features/project-api-slice";
 import { useAppSelector } from "@/hooks/hooks";
-import { skip } from "node:test";
 
 export default function Projects()
 {
