@@ -54,7 +54,7 @@ export default function AddProject() {
                         <Icons.add/>
                     </Button>
                 </SheetTrigger>
-                <SheetContent className="md:w-1/2 w-full overflow-auto">
+                <SheetContent className="lg:w-1/2 md:w-3/4 w-full overflow-auto">
                     <SheetHeader>
                         <SheetTitle>Add Project</SheetTitle>
                         <SheetDescription>
