@@ -9,7 +9,7 @@ import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:8000/',
+    baseUrl: import.meta.env.VITE_BACKEND_URL,
     credentials: 'include',
 });
 const baseQueryWithReauth: BaseQueryFn<
