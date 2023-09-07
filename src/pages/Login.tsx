@@ -16,7 +16,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
-import { useLoginMutation } from "@/features/auth-api-slice"
 import { useAppDispatch } from "@/hooks/hooks"
 import { setAuth } from "@/features/auth-slice"
 
@@ -65,7 +64,7 @@ export default function LoginPage() {
                 const errorData = await response.json();
                 
                 if (errorData && typeof errorData === "object") {
-                    for (let [field, errorArray] of Object.entries(errorData)) {
+                    for (let [_field, errorArray] of Object.entries(errorData)) {
                         // Use a type assertion for errorArray
                         const messages = errorArray as string[];
                         toast({

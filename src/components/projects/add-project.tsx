@@ -12,8 +12,6 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 
 
 import { Textarea } from "@/components/ui/textarea"
@@ -21,28 +19,10 @@ import { Textarea } from "@/components/ui/textarea"
 import {Label} from "@/components/ui/label"
 
 import {Input} from "@/components/ui/input";
-import { useForm } from "react-hook-form";
 
-const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-  })
 
 export default function AddProject() {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          username: "",
-        },
-      })
-
-      function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-      }
 
     return (
         <div className="flex justify-end mb-4">

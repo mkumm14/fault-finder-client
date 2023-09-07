@@ -15,7 +15,7 @@ export default function Projects()
 {
     
     const isAuthenticated  = useAppSelector(state=>state.auth.isAuthenticated)
-    const {data: projects, isLoading, isFetching} = useRetrieveUserProjectQuery(undefined,{skip:!isAuthenticated});
+    const {data: projects, isFetching} = useRetrieveUserProjectQuery(undefined,{skip:!isAuthenticated});
 
 
     function navigateToProject(id: any) {

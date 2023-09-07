@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-import {MainNavItem, SidebarNavItem} from "@/types"
+import { SidebarNavItem} from "@/types"
 import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
 import { MobileNav } from "@/components/mobile-nav"

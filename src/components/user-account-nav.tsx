@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import {
     DropdownMenu,
@@ -24,7 +24,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 
     const isAuthenticated  = useAppSelector(state=>state.auth.isAuthenticated)
 
-    const {data:AppUser, isLoading} =  useRetrieveUserQuery(undefined,{skip:!isAuthenticated});
+    const {data:AppUser} =  useRetrieveUserQuery(undefined,{skip:!isAuthenticated});
 
     const dispatch = useAppDispatch();
 
@@ -34,7 +34,6 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
     const {toast} = useToast()
 
 
-    const navigate = useNavigate()
 
     const handleLogout = async () => {
 

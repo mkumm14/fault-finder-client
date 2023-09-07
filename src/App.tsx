@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter, Route, createRoutesFromElements, Routes } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, Route, createRoutesFromElements,  } from 'react-router-dom'
 import Root from './pages/Root';
 import { ThemeProvider } from './components/theme-provider';
 import { Toaster } from "@/components/ui/toaster";

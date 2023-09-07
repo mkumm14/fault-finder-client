@@ -81,7 +81,7 @@ export default function SignUpPage() {
             if (!response.ok) {
                 // Check for any error messages and display them
                 const errors = data as Record<string,string[]>;
-                for (let [field, errorArray] of Object.entries(errors)) {
+                for (let [_field, errorArray] of Object.entries(errors)) {
                     toast({
                         variant: "destructive",
                         className:'mb-5',
