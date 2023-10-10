@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import {
     DropdownMenu,
@@ -31,6 +31,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 
     const [logout] = useLogoutMutation();
 
+
+    const navigate= useNavigate()
     const {toast} = useToast()
 
 
@@ -44,6 +46,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                 description: "Logged out successfully"
             })
 
+            navigate('/login')
             location.reload()
 
         }catch (error:any)
