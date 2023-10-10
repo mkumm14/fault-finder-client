@@ -31,11 +31,12 @@ const projectApiSlice = apiSlice.injectEndpoints({
         }),
         addProject: builder.mutation({
             query: ({title, description}) => ({
-                url: '/projects/add-project',
+                url: '/projects/create',
                 method: 'POST',
                 body: {title, description}
 
-            })
+            }),
+            invalidatesTags:['Projects']
 
 
         })
@@ -43,4 +44,4 @@ const projectApiSlice = apiSlice.injectEndpoints({
 })
 
 
-export const {useRetrieveUserProjectQuery} = projectApiSlice;
+export const {useRetrieveUserProjectQuery, useAddProjectMutation} = projectApiSlice;
