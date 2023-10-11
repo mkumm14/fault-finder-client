@@ -145,14 +145,14 @@ export default function AddProject() {
 
                             </div> */}
                             <SheetFooter>
-                                {/* <SheetClose asChild> */}
+                                <SheetClose asChild>
                                     {isLoading ? <div>
                                         loading....
                                     </div> :
                                         <Button type="submit" >Save changes</Button>
                                     }
 
-                                {/* </SheetClose> */}
+                                </SheetClose>
                             </SheetFooter>
                         </form>
                     </SheetContent>
