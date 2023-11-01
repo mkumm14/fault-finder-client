@@ -12,6 +12,8 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import PublicRoute from './lib/PublicRoute';
 import RootLayout from './layouts/RootLayout';
+import ProjectLayout from './layouts/ProjectLayout';
+import ProjectDashboard from './pages/projects/ProjectDashboard';
 
 
 
@@ -28,6 +30,14 @@ const router = createBrowserRouter(
             <Route path='dashboard' element={<Dashboard />}></Route>
             <Route path='projects' element={<Projects />}></Route>
           </Route>
+        </Route>
+        <Route element={<ProjectLayout/>}>
+          <Route element={<PrivateRoute/>}>
+
+            <Route path="project/:projectId" element={<ProjectDashboard/>}></Route>
+
+          </Route>
+
         </Route>
     </Route>
   )

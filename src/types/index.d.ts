@@ -16,14 +16,14 @@ export type SidebarNavItem = {
     external?: boolean
     icon?: keyof typeof Icons
 } & (
-    | {
-    href: string
-    items?: never
-}
-    | {
-    href?: string
-    items: NavLink[]
-}
+        | {
+            href: string
+            items?: never
+        }
+        | {
+            href?: string
+            items: NavLink[]
+        }
     )
 
 export type SiteConfig = {
@@ -52,3 +52,9 @@ export type DashboardConfig = {
 }
 
 
+
+export type ProjectConfig = {
+    mainNav: MainNavItem[]
+    sidebarNav: SidebarNavItem[]
+
+}
