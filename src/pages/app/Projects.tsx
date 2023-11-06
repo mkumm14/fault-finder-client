@@ -10,17 +10,20 @@ import {
 } from "@/components/ui/table"
 import { useRetrieveUserProjectQuery } from "@/features/project-api-slice";
 import { useAppSelector } from "@/hooks/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function Projects()
 {
     
+
+    const  navigate = useNavigate();
     const isAuthenticated  = useAppSelector(state=>state.auth.isAuthenticated)
     const {data: projects, isFetching} = useRetrieveUserProjectQuery(undefined,{skip:!isAuthenticated});
 
 
     function navigateToProject(id: any) {
 
-        console.log(`projects/${id}`);
+        navigate(`/project/${id}`);
     }
 
     return (

@@ -16,6 +16,11 @@ export const ProjectPageConfig: ProjectConfig = {
 
     sidebarNav: [
         {
+            title: "dashboard",
+            href: "/project",
+            icon: "billing",
+        },
+        {
             title: "bugs",
             href: "/bugs",
             icon: "post",

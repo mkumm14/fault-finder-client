@@ -39,9 +39,13 @@ const projectApiSlice = apiSlice.injectEndpoints({
             invalidatesTags:['Projects']
 
 
+        }),
+        retrieveProjectDetails: builder.query<Project, string | undefined>({
+            query:(id)=>`/projects/${id}`,
         })
+        
     })
 })
 
 
-export const {useRetrieveUserProjectQuery, useAddProjectMutation} = projectApiSlice;
+export const {useRetrieveUserProjectQuery, useAddProjectMutation, useRetrieveProjectDetailsQuery} = projectApiSlice;
