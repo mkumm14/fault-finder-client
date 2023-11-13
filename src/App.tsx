@@ -35,6 +35,7 @@ const router = createBrowserRouter(
           <Route element={<PrivateRoute/>}>
 
             <Route path="project/:projectId" element={<ProjectDashboard/>}></Route>
+            <Route path="project/:projectId/bugs" element={<h1>This is bugs page </h1>}></Route>
 
           </Route>
 

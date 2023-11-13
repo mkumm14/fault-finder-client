@@ -16,18 +16,18 @@ export const ProjectPageConfig: ProjectConfig = {
 
     sidebarNav: [
         {
-            title: "dashboard",
-            href: "/project",
+            title: "project-dashboard",
+            href: "/project/:projectId",
             icon: "billing",
         },
         {
             title: "bugs",
-            href: "/bugs",
+            href:"/project/:projectId/bugs",
             icon: "post",
         },
         {
             title: "report",
-            href: "/report",
+            href: "/project/:projectId/report",
             icon: "billing",
         },
 

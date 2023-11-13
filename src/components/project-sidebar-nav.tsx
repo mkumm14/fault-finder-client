@@ -1,6 +1,6 @@
 "use client"
 
-import {  NavLink, useLocation, useParams } from "react-router-dom"
+import { NavLink, useLocation, useParams } from "react-router-dom"
 
 
 import { cn } from "@/lib/utils"
@@ -19,20 +19,39 @@ export function ProjectSidebarNav({ items }: DashboardNavProps) {
         return null
     }
 
-    const {projectId} = useParams()
+    const { projectId } = useParams()
+
+    // const determineHref = (title: string, projectId: string | undefined) => {
+    //     switch (title) {
+    //         case "project-dashboard":
+    //             return `/project/${projectId}`;
+    //         case "bugs":
+    //             return `/project/${projectId}/bugs`;
+    //         case "report":
+    //             return `/project/${projectId}/report/`;
+    //         default:
+    //             return `/`;
+    //     }
+    // };
+
 
 
     return (
         <nav className="grid items-start gap-2">
             {items.map((item, index) => {
                 const Icon = Icons[item.icon || "arrowRight"]
+                const href = item.href ? item.href.replace(':projectId', projectId || '') : '/';
+
+                console.log(href)
+
+
                 return (
                     item.href && (
                         <NavLink key={index} className={({ isActive }) =>
                             isActive
                                 ? "bg-accent rounded-md"
-                                    : "transparent"
-                        } to={item.disabled ? "/" : item.href+`/${projectId}`}>
+                                : "transparent"
+                        }   end={true} to={item.disabled ? "/" : href}>
                             <span
                                 className={cn(
                                     "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
