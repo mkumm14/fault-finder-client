@@ -81,6 +81,9 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                     <Link to="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                    <Link to="/profile">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                     <Link to="/dashboard/billing">Billing</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
