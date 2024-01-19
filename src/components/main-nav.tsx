@@ -6,8 +6,8 @@ import { Icons } from "@/components/icons"
 import { MobileNav } from "@/components/mobile-nav"
 
 interface MainNavProps {
-    items?: SidebarNavItem[]
-    children?: React.ReactNode
+    items?: SidebarNavItem[] | null;
+    children?: React.ReactNode;
 }
 
 export function MainNav({ items, children }: MainNavProps) {
