@@ -14,6 +14,7 @@ import PublicRoute from './lib/PublicRoute';
 import RootLayout from './layouts/RootLayout';
 import ProjectLayout from './layouts/ProjectLayout';
 import ProjectDashboard from './pages/projects/ProjectDashboard';
+import ProjectSettings from './pages/projects/settings';
 
 
 
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
 
             <Route path="project/:projectId" element={<ProjectDashboard/>}></Route>
             <Route path="project/:projectId/bugs" element={<h1>This is bugs page </h1>}></Route>
+            <Route path="project/:projectId/settings" element={<ProjectSettings/>}></Route>
 
           </Route>
 

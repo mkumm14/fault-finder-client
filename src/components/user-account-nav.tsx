@@ -11,7 +11,7 @@ import { UserAvatar } from "@/components/user-avatar"
 import { logout as setLogout } from '@/features/auth-slice';
 
 
-import {useToast} from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useLogoutMutation, useRetrieveUserQuery } from "@/features/auth-api-slice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 
@@ -22,9 +22,9 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
 
-    const isAuthenticated  = useAppSelector(state=>state.auth.isAuthenticated)
+    const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
 
-    const {data:AppUser} =  useRetrieveUserQuery(undefined,{skip:!isAuthenticated});
+    const { data: AppUser } = useRetrieveUserQuery(undefined, { skip: !isAuthenticated });
 
     const dispatch = useAppDispatch();
 
@@ -32,8 +32,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
     const [logout] = useLogoutMutation();
 
 
-    const navigate= useNavigate()
-    const {toast} = useToast()
+    const navigate = useNavigate()
+    const { toast } = useToast()
 
 
 
@@ -45,12 +45,14 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             toast({
                 description: "Logged out successfully"
             })
+            setTimeout(() => {
+                navigate('/login');
+                location.reload();
+            }, 3000); // Adjust the time (3000 ms = 3 seconds) as needed
 
-            navigate('/login')
-            location.reload()
 
-        }catch (error:any)
-        {
+
+        } catch (error: any) {
             console.log(error)
         }
 

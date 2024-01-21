@@ -10,6 +10,17 @@ interface Project {
 }
 
 
+interface ProjectDetail{
+    id: string;
+    title: string;
+    description: string;
+    users: string[];
+    created_date: string;
+    updated_date: string;
+    owner_username: string;
+    updated_by_username: string;
+}
+
 function formatDate(isoString: string): string {
     const date = new Date(isoString);
     return date.toLocaleDateString(); // Outputs something like "8/20/2023"
@@ -40,7 +51,7 @@ const projectApiSlice = apiSlice.injectEndpoints({
 
 
         }),
-        retrieveProjectDetails: builder.query<Project, string | undefined>({
+        retrieveProjectDetails: builder.query<ProjectDetail, string | undefined>({
             query:(id)=>`/projects/${id}`,
         })
         

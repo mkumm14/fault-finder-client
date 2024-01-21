@@ -30,6 +30,11 @@ export const ProjectPageConfig: ProjectConfig = {
             href: "/project/:projectId/report",
             icon: "billing",
         },
+        {
+            title: "settings",
+            href: "/project/:projectId/settings",
+            icon: "settings",
+        },
 
     ],
 
