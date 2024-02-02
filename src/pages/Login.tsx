@@ -20,13 +20,13 @@ import { useAppDispatch } from "@/hooks/hooks"
 import { setAuth } from "@/features/auth-slice"
 
 const formSchema = z.object({
-    username: z.string().nonempty({
-        message: 'This is required'
-    }),
-    password: z.string().nonempty({
-        message: 'This is required'
+        username: z.string().min(1, {
+            message: 'This is required'
+        }),
+        password: z.string().min(1, {
+            message: 'This is required'
+        })
     })
-})
 
 export default function LoginPage() {
     // 1. Define your form.
