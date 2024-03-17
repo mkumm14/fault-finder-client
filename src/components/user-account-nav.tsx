@@ -14,6 +14,7 @@ import { logout as setLogout } from '@/features/auth-slice';
 import { useToast } from "@/components/ui/use-toast";
 import { useLogoutMutation, useRetrieveUserQuery } from "@/features/auth-api-slice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { apiSlice } from "@/features/api-slice";
 
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -47,8 +48,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             })
             setTimeout(() => {
                 navigate('/login');
-                location.reload();
-            }, 3000); // Adjust the time (3000 ms = 3 seconds) as needed
+                dispatch(apiSlice.util.resetApiState());
+            }); // Adjust the time (3000 ms = 3 seconds) as needed
 
 
 
