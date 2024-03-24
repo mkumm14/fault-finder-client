@@ -41,6 +41,17 @@ export default function ProjectSettings() {
 
     const { data: project, isFetching } = useRetrieveProjectDetailsQuery(projectId);
 
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+          title: project?.title,
+          description: project?.description,
+          created_date: new Date(project?.created_date??"").toDateString(),
+          updated_date: new Date(project?.updated_date??"").toDateString(),
+
+
+      },
+  })
 
 
     if (isFetching) {
@@ -51,17 +62,6 @@ export default function ProjectSettings() {
         return <p>Project not found.</p>;
     }
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: project.title,
-            description: project.description,
-            created_date: new Date(project.created_date).toDateString(),
-            updated_date: new Date(project.updated_date).toDateString(),
-
-
-        },
-    })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
     }
