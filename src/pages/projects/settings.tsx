@@ -1,5 +1,5 @@
 import { useRetrieveProjectDetailsQuery } from "@/features/project-api-slice";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form"
@@ -42,18 +42,31 @@ export default function ProjectSettings() {
     const { data: project, isFetching } = useRetrieveProjectDetailsQuery(projectId);
 
     const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-          title: project?.title,
-          description: project?.description,
-          created_date: new Date(project?.created_date??"").toDateString(),
-          updated_date: new Date(project?.updated_date??"").toDateString(),
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            title: project?.title,
+            description: project?.description,
+            created_date: new Date(project?.created_date ?? "").toDateString(),
+            updated_date: new Date(project?.updated_date ?? "").toDateString(),
 
 
-      },
-  })
+        },
+    })
 
 
+
+    const { reset } = form; 
+    useEffect(() => {
+        if (project) {
+            reset({
+                title: project.title ?? "",
+                description: project.description ?? "",
+                created_date: new Date(project?.created_date ?? "").toDateString(),
+                updated_date: new Date(project?.updated_date ?? "").toDateString(),
+    
+            });
+        }
+    }, [project, reset]); 
     if (isFetching) {
         return <p>Loading...</p>;
     }
@@ -64,6 +77,7 @@ export default function ProjectSettings() {
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(values);
     }
 
 
@@ -88,7 +102,7 @@ export default function ProjectSettings() {
 
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 container">
+            <form className="space-y-8 container">
                 <FormField
                     control={form.control}
                     name="title"
@@ -96,7 +110,7 @@ export default function ProjectSettings() {
                         <FormItem>
                             <FormLabel>Project Title</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} disabled className="disabled:text-black disabled:font-semibold" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -109,35 +123,34 @@ export default function ProjectSettings() {
                         <FormItem>
                             <FormLabel>Project Description</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} disabled className="disabled:text-black disabled:font-semibold" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-
-                <span className={'flex space-y-8 space-x-0 flex-col md:flex-row md:space-y-0 md:space-x-2'}>            
+                <span className="flex flex-col space-y-8 md:flex-row md:space-y-0 md:space-x-2">
                     <FormField
-                    control={form.control}
-                    name="created_date"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Created Date</FormLabel>
-                            <FormControl>
-                                <Input {...field} disabled />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                        control={form.control}
+                        name="created_date"
+                        render={({ field }) => (
+                            <FormItem className="w-full md:w-1/2"> {/* Full width on small, half on medium */}
+                                <FormLabel>Created Date</FormLabel>
+                                <FormControl>
+                                    <Input {...field} disabled  className="disabled:text-black disabled:font-semibold" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name="updated_date"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="w-full md:w-1/2"> {/* Full width on small, half on medium */}
                                 <FormLabel>Updated Date</FormLabel>
-                                <FormControl>
-                                    <Input {...field} disabled />
+                                <FormControl> 
+                                    <Input {...field} disabled  className="disabled:text-black disabled:font-semibold"/>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -147,9 +160,10 @@ export default function ProjectSettings() {
 
 
 
+{/* 
                 <Button type="submit">
                     {form.formState.isSubmitting ? "Submitting..." : "Submit"}
-                </Button>
+                </Button> */}
             </form>
         </Form>
     )
