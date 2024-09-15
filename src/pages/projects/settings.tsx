@@ -131,7 +131,7 @@ export default function ProjectSettings() {
                                         <Input
                                             {...field}
                                             disabled={!editMode}
-                                            className={`${!editMode ? "disabled:text-black disabled:font-semibold" : ""}`}
+                                            className={`${!editMode ? "disabled disabled:font-semibold" : ""}`}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -148,7 +148,7 @@ export default function ProjectSettings() {
                                         <Input
                                             {...field}
                                             disabled={!editMode}
-                                            className={`${!editMode ? "disabled:text-black disabled:font-semibold" : ""}`}
+                                            className={`${!editMode ? "disabled disabled:font-semibold" : ""}`}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -165,8 +165,8 @@ export default function ProjectSettings() {
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                disabled={!editMode}
-                                                className={`${!editMode ? "disabled:text-black disabled:font-semibold" : ""}`}
+                                                disabled
+                                                className={"disabled disabled:font-semibold"}
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -182,8 +182,8 @@ export default function ProjectSettings() {
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                disabled={!editMode}
-                                                className={`${!editMode ? "disabled:text-black disabled:font-semibold" : ""}`}
+                                                disabled
+                                                className={"disabled disabled:font-semibold"}
                                             />
                                         </FormControl>
                                         <FormMessage />
