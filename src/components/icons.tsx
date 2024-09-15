@@ -21,6 +21,7 @@ import {
     SunMedium,
     Trash,
     Twitter,
+    Pencil,
     User,
     X,
     LucideIcon
@@ -48,6 +49,7 @@ export const Icons = {
     help: HelpCircle,
     pizza: Pizza,
     sun: SunMedium,
+    pencil: Pencil,
     moon: Moon,
     laptop: Laptop,
     gitHub: ({ ...props }: LucideProps) => (

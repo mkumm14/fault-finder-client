@@ -53,10 +53,25 @@ const projectApiSlice = apiSlice.injectEndpoints({
         }),
         retrieveProjectDetails: builder.query<ProjectDetail, string | undefined>({
             query:(id)=>`/projects/${id}`,
+            providesTags: (result, error, id) => [{ type: 'Project', id }],
+
+        }),
+        updateProject: builder.mutation({
+            query: ({id, title, description}) => ({
+                url: `/projects/update/${id}`,  // Ensure the endpoint is correct
+                method: 'PATCH',  // Use PATCH for partial updates
+                body: { title, description }  // Send only the fields being updated
+            }),
+            invalidatesTags: (result, error, { id }) => [
+                { type: 'Project', id },  // Invalidate the specific 'Project' by id
+                'Projects',  // Optionally invalidate the entire project list as well
+            ]
+
+
         })
         
     })
 })
 
 
-export const {useRetrieveUserProjectQuery, useAddProjectMutation, useRetrieveProjectDetailsQuery} = projectApiSlice;
+export const {useRetrieveUserProjectQuery, useAddProjectMutation, useRetrieveProjectDetailsQuery, useUpdateProjectMutation} = projectApiSlice;
