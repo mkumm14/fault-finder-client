@@ -90,6 +90,7 @@ export default function ProjectSettings() {
         return <p>Project not found.</p>;
     }
 
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             await updateProject({
@@ -115,6 +116,10 @@ export default function ProjectSettings() {
             updated_date: new Date(project?.updated_date ?? "").toDateString(),
         });
     }
+
+
+    const isOwner = AppUser?.username === project?.owner_username;
+
 
     return (
         <div className="space-y-8">
@@ -213,7 +218,7 @@ export default function ProjectSettings() {
                 </Form>
             </div>
             <div className="container">
-                {!editMode && (
+                {!editMode && isOwner && (
                     <Button
                         variant="outline"
                         size="icon"
