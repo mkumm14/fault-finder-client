@@ -1,3 +1,29 @@
+/**
+ * SignUpPage component handles the user registration process.
+ * 
+ * This component renders a registration form with fields for username, email, first name, last name, 
+ * password, and password confirmation. It uses `react-hook-form` for form state management and validation, 
+ * and `zod` for schema validation.
+ * 
+ * The form data is submitted to a backend endpoint for user registration. If the registration is successful, 
+ * the user is navigated to the login page. If there are errors, they are displayed using a toast notification.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <SignUpPage />
+ * )
+ * 
+ * @returns {JSX.Element} The rendered SignUpPage component.
+ * 
+ * @remarks
+ * - The form uses `zodResolver` for schema validation.
+ * - The `useToast` hook is used to display success or error messages.
+ * - The `useNavigate` hook from `react-router-dom` is used for navigation after successful registration.
+ * 
+ * @function
+ * @name SignUpPage
+ */
 "use client"
 
 import { Link, useNavigate } from "react-router-dom"
@@ -220,3 +246,5 @@ export default function SignUpPage() {
         </>
     )
 }
+
+

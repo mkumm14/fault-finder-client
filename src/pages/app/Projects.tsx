@@ -1,3 +1,41 @@
+/**
+ * Projects component that displays a list of user projects in a table format.
+ * 
+ * This component fetches the user's projects using the `useRetrieveUserProjectQuery` hook
+ * and displays them in a table. Each row in the table is clickable and navigates to the 
+ * project's detail page.
+ * 
+ * @component
+ * 
+ * @returns {JSX.Element} The rendered Projects component.
+ * 
+ * 
+ * @remarks
+ * This component uses the `useNavigate` hook from `react-router-dom` to handle navigation
+ * and the `useAppSelector` hook to access the authentication state from the Redux store.
+ * 
+ * @function
+ * @name Projects
+ * 
+ * @hook
+ * @name useRetrieveUserProjectQuery
+ * @description Fetches the user's projects from the API.
+ * 
+ * @hook
+ * @name useAppSelector
+ * @description Accesses the authentication state from the Redux store.
+ * 
+ * @hook
+ * @name useNavigate
+ * @description Provides navigation functionality.
+ * 
+ * @typedef {Object} Project
+ * @property {string} id - The unique identifier of the project.
+ * @property {string} title - The title of the project.
+ * @property {string} owner - The owner of the project.
+ * @property {string} created_date - The date the project was created.
+ * @property {string} updated_date - The date the project was last updated.
+ */
 import AddProject from "@/components/projects/add-project";
 import {
     Table,
@@ -65,3 +103,5 @@ export default function Projects()
 
     )
 }
+
+

@@ -1,3 +1,16 @@
+/**
+ * LoginPage component handles the user login functionality.
+ * 
+ * This component renders a login form where users can input their username/email and password.
+ * It uses `react-hook-form` for form handling and validation, and `zod` for schema validation.
+ * Upon form submission, it sends a POST request to the authentication endpoint.
+ * If the login is successful, it dispatches an authentication action, shows a success toast, and navigates to the dashboard.
+ * If there are errors, it displays appropriate error messages using toasts.
+ * 
+ * @component
+ * 
+ * @returns {JSX.Element} The rendered login page component.
+ */
 "use client"
 
 import { Link, useNavigate } from "react-router-dom"
@@ -156,3 +169,6 @@ export default function LoginPage() {
         </>
     )
 }
+
+
+
