@@ -1,3 +1,37 @@
+/**
+ * AddProject component allows users to create a new project by providing a title and description.
+ * It uses a form with validation powered by `react-hook-form` and `zod`.
+ * The form is displayed within a Sheet component for a modal-like experience.
+ * 
+ * @component
+ * 
+ * @example
+ * return (
+ *   <AddProject />
+ * )
+ * 
+ * @returns {JSX.Element} The rendered AddProject component.
+ * 
+ * @remarks
+ * This component uses the `useAddProjectMutation` hook to handle the project creation API call.
+ * The form is reset upon successful submission.
+ * 
+ * @function
+ * @name AddProject
+ * 
+ * @requires @/components/ui/button
+ * @requires @/components/icons
+ * @requires @/components/ui/sheet
+ * @requires @/components/ui/form
+ * @requires @hookform/resolvers/zod
+ * @requires zod
+ * @requires @/components/ui/textarea
+ * @requires @/components/ui/label
+ * @requires @/components/ui/input
+ * @requires react-hook-form
+ * @requires @/features/project-api-slice
+ */
+
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 
@@ -163,3 +197,6 @@ export default function AddProject() {
     )
 
 }
+
+
+

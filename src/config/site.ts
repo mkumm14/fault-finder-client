@@ -11,3 +11,4 @@ export const siteConfig: SiteConfig = {
         github: "https://github.com/shadcn/taxonomy",
     },
 }
+

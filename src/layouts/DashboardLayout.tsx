@@ -1,3 +1,30 @@
+/**
+ * DashboardLayout component is the main layout for the dashboard section of the application.
+ * It includes a header with navigation and user account controls, and a main content area
+ * that can be collapsed or expanded.
+ *
+ * @component
+ * @example
+ * // Usage example
+ * <DashboardLayout />
+ *
+ * @returns {JSX.Element} The rendered DashboardLayout component.
+ *
+ * @remarks
+ * - The layout consists of a header and a main content area.
+ * - The header includes the main navigation, a mode toggle button, and user account navigation.
+ * - The main content area includes a sidebar navigation that can be collapsed or expanded.
+ *
+ * @function
+ * @name DashboardLayout
+ *
+ * @hook
+ * @name useState
+ * @description Manages the collapsed state of the sidebar.
+ *
+ * @param {boolean} isCollapsed - State to determine if the sidebar is collapsed.
+ * @param {Function} setIsCollapsed - Function to toggle the collapsed state of the sidebar.
+ */
 import { dashboardConfig } from "@/config/dashboard"
 import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/sidebar-nav"
@@ -57,3 +84,5 @@ export default function DashboardLayout() {
         </div>
     )
 }
+
+

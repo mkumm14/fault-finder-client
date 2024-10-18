@@ -1,3 +1,26 @@
+/**
+ * Main application component that sets up the routing, theme, and state management for the application.
+ * 
+ * @component
+ * 
+ * @returns {JSX.Element} The main application component.
+ * 
+ * @remarks
+ * This component uses `react-router-dom` for routing, `react-redux` for state management, and a custom `ThemeProvider` for theming.
+ * 
+ * The routing structure includes:
+ * - Public routes for login and sign-up.
+ * - Private routes for dashboard and project-related pages.
+ * 
+ * The `RouterProvider` is used to provide the router configuration created with `createBrowserRouter` and `createRoutesFromElements`.
+ * 
+ * The `ThemeProvider` is used to apply a dark theme by default, with the theme preference stored in local storage.
+ * 
+ * The `Provider` component from `react-redux` is used to make the Redux store available to the rest of the app.
+ * 
+ * The `RootLayout` component wraps the main content and includes a `Toaster` component for displaying toast notifications.
+ */
+
 import { RouterProvider, createBrowserRouter, Route, createRoutesFromElements,  } from 'react-router-dom'
 import Root from './pages/Root';
 import { ThemeProvider } from './components/theme-provider';

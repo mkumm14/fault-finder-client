@@ -1,3 +1,23 @@
+/**
+ * ProjectLayout component is the main layout for the project pages.
+ * It includes a header with navigation and user account controls, 
+ * and a main content area with a collapsible sidebar.
+ *
+ * @component
+ * 
+ * @example
+ * <ProjectLayout />
+ *
+ * @returns {JSX.Element} The rendered ProjectLayout component.
+ *
+ * @remarks
+ * The layout consists of a header and a main content area. The header contains
+ * the main navigation, a button to toggle the sidebar, a mode toggle, and user account navigation.
+ * The main content area includes a collapsible sidebar and a main section where nested routes are rendered.
+ *
+ * @function
+ * @name ProjectLayout
+ */
 import { MainNav } from "@/components/main-nav"
 import { ProjectSidebarNav } from "@/components/project-sidebar-nav"
 import { UserAccountNav } from "@/components/user-account-nav"
@@ -55,3 +75,4 @@ export default function ProjectLayout() {
         </div>
     )
 }
+

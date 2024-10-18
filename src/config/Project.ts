@@ -1,3 +1,17 @@
+/**
+ * Configuration object for the Project Page.
+ * 
+ * @type {ProjectConfig}
+ * 
+ * @property {Array<{title: string, href: string, disabled?: boolean}>} mainNav - The main navigation links.
+ * @property {Array<{title: string, href: string, icon: string}>} sidebarNav - The sidebar navigation links.
+ * 
+ * @example
+ * // Example usage of ProjectPageConfig
+ * const config = ProjectPageConfig;
+ * console.log(config.mainNav[0].title); // Output: "Documentation"
+ * console.log(config.sidebarNav[1].icon); // Output: "post"
+ */
 import {  ProjectConfig } from "@/types"
 
 export const ProjectPageConfig: ProjectConfig = {
@@ -41,3 +55,4 @@ export const ProjectPageConfig: ProjectConfig = {
 
  
 }
+
