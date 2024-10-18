@@ -1,6 +1,6 @@
 export default function Dashboard()
 {
     return (
-        <h1>This is dashboard page lmao</h1>
+        <h1>This is dashboard page</h1>
     )
 }
