@@ -92,7 +92,7 @@ const projectApiSlice = apiSlice.injectEndpoints({
          */
         retrieveProjectDetails: builder.query<ProjectDetail, string | undefined>({
             query: (id) => `/projects/${id}`,
-            providesTags: (result, error, id) => [{ type: 'Project', id }],
+            providesTags: (_, __, id) => id ? [{ type: 'Project', id }]:[],
         }),
 
         /**
@@ -109,10 +109,10 @@ const projectApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: { title, description }
             }),
-            invalidatesTags: (result, error, { id }) => [
+            invalidatesTags: (_, __, { id }) => id ? [
                 { type: 'Project', id },
                 'Projects',
-            ]
+            ] : ['Projects']
         })
     })
 })

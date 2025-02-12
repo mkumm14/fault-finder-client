@@ -11,6 +11,12 @@ const SheetTrigger = SheetPrimitive.Trigger
 
 const SheetClose = SheetPrimitive.Close
 
+declare module '@radix-ui/react-dialog' {
+  export interface DialogPortalProps {
+    className?: string; 
+  }
+}
+
 const SheetPortal = ({
   className,
   ...props

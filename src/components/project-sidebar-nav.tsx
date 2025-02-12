@@ -1,6 +1,6 @@
 "use client"
 
-import { NavLink, useLocation, useParams } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 
 
 import { cn } from "@/lib/utils"
@@ -39,7 +39,7 @@ export function ProjectSidebarNav({ items }: DashboardNavProps) {
     return (
         <nav className="grid items-start gap-2">
             {items.map((item, index) => {
-                const Icon = Icons[item.icon || "arrowRight"]
+                const Icon = Icons[item.icon as keyof typeof Icons || "arrowRight"]
                 const href = item.href ? item.href.replace(':projectId', projectId || '') : '/';
 
                 console.log(href)

@@ -52,11 +52,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from 
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 
-
-import { Textarea } from "@/components/ui/textarea"
-
-import { Label } from "@/components/ui/label"
-
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useAddProjectMutation } from "@/features/project-api-slice";
@@ -83,7 +78,7 @@ export default function AddProject() {
     })
 
 
-    const [addProject, { isLoading, isError, error }] = useAddProjectMutation();
+    const [addProject, { isLoading }] = useAddProjectMutation();
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -109,60 +104,62 @@ export default function AddProject() {
 
 
     return (
-        <div className="flex justify-end mb-4">
-            <Sheet>
-                <SheetTrigger asChild>
+        
+            
+            <div className="flex justify-end mb-4">
+                <Sheet>
+                    <SheetTrigger asChild>
 
-                    <Button variant="ghost" size="sm" className="h-8 w-8 px-0"
-                        onClick={() => console.log("add project")}>
-                        <Icons.add />
-                    </Button>
-                </SheetTrigger>
-                <Form {...form}>
-                    <SheetContent className="lg:w-1/2 md:w-3/4 w-full overflow-auto">
-                        <SheetHeader>
-                            <SheetTitle>Add Project</SheetTitle>
-                            <SheetDescription>
-                                Create a project here. Click save when you're done.
-                            </SheetDescription>
-                        </SheetHeader>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 px-0"
+                            onClick={() => console.log("add project")}>
+                            <Icons.add />
+                        </Button>
+                    </SheetTrigger>
+                    <Form {...form}>
+                        <SheetContent className="lg:w-1/2 md:w-3/4 w-full overflow-auto">
+                            <SheetHeader>
+                                <SheetTitle>Add Project</SheetTitle>
+                                <SheetDescription>
+                                    Create a project here. Click save when you're done.
+                                </SheetDescription>
+                            </SheetHeader>
 
-                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <form onSubmit={form.handleSubmit(onSubmit)}>
 
-                            <div className="grid gap-4 py-4">
-                                <div className="grid gap-4">
-                                    <FormField
-                                        control={form.control}
-                                        name="title"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Title</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Project title" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+                                <div className="grid gap-4 py-4">
+                                    <div className="grid gap-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="title"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Title</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="Project title" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    <div className="grid gap-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="description"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Description</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="Project description" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="grid gap-4">
-                                    <FormField
-                                        control={form.control}
-                                        name="description"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Description</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Project description" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            </div>
 
-                            {/* <div className="grid gap-4 py-4">
+                                {/* <div className="grid gap-4 py-4">
                                 <div className="grid gap-4">
                                     <Label htmlFor="title">
                                         Title
@@ -178,22 +175,23 @@ export default function AddProject() {
 
 
                             </div> */}
-                            <SheetFooter>
-                                <SheetClose asChild>
-                                    {isLoading ? <div>
-                                        loading....
-                                    </div> :
-                                        <Button type="submit" >Save changes</Button>
-                                    }
+                                <SheetFooter>
+                                    <SheetClose asChild>
+                                        {isLoading ? <div>
+                                            loading....
+                                        </div> :
+                                            <Button type="submit" >Save changes</Button>
+                                        }
 
-                                </SheetClose>
-                            </SheetFooter>
-                        </form>
-                    </SheetContent>
+                                    </SheetClose>
+                                </SheetFooter>
+                            </form>
+                        </SheetContent>
 
-                </Form>
-            </Sheet>
-        </div>
+                    </Form>
+                </Sheet>
+            </div>
+        
     )
 
 }
