@@ -84,42 +84,64 @@ export default function SignUpPage() {
 
     const navigate = useNavigate();
 
-    const [register,] = useRegisterMutation()
+    const [register, { isLoading }] = useRegisterMutation()
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        const { first_name, last_name, username, email, password1, password2 } = values;
+    
         try {
-            await register(values).unwrap()
-
-            toast({
-                description: "Registered successfully",
-            })
-            navigate("/login")
-        } catch (error) {
-            const err = error as FetchBaseQueryError
-
-            if (err?.data && typeof err.data === "object") {
-                for (const [_field, errorArray] of Object.entries(err.data)) {
-                    if (Array.isArray(errorArray)) {
-                        toast({
-                            variant: "destructive",
-                            className: "mb-5",
-                            description: errorArray[0],
-                        })
-                    }
+            const response = await fetch('http://api.fault-finder.me/auth/registration/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    first_name, 
+                    last_name, 
+                    username, 
+                    email, 
+                    password1, 
+                    password2 
+                }),
+                credentials:"include"
+            });
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                // Check for any error messages and display them
+                const errors = data as Record<string,string[]>;
+                for (let [_field, errorArray] of Object.entries(errors)) {
+                    toast({
+                        variant: "destructive",
+                        className:'mb-5',
+                        description:`${errorArray[0]}`
+                    })
                 }
             } else {
                 toast({
-                    variant: "destructive",
-                    className: "mb-5",
-                    description: "An unexpected error occurred. Please try again.",
-                })
+                    description: "Registered successfully"
+                });
+                navigate('/login')
+
             }
+
+    
+        } catch (error: any) {
+            console.error("An error occurred:", error);
+            // We'll retain this error message for unexpected errors.
+            toast({
+                variant: "destructive",
+                className: 'mb-5',
+                description: "An unexpected error occurred. Please try again."
+            });
         }
-
-        form.reset()
+    
+        form.reset();
     }
-
+    
+    
     
 
     return (
