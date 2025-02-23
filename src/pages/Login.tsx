@@ -31,7 +31,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch } from "@/hooks/hooks"
 import { setAuth } from "@/features/auth-slice"
-import { useLoginMutation } from "@/features/auth-api-slice"
+// import { useLoginMutation } from "@/features/auth-api-slice"
 
 const formSchema = z.object({
         username: z.string().min(1, {
@@ -57,7 +57,7 @@ export default function LoginPage() {
 
     const dispatch = useAppDispatch();
 
-    const [login, { isLoading }] = useLoginMutation()
+    // const [login, { isLoading }] = useLoginMutation()
 
     const navigate = useNavigate();
 

@@ -43,8 +43,8 @@ import {
 import {Input} from "@/components/ui/input"
 import {useForm} from "react-hook-form";
 import {useToast} from "@/components/ui/use-toast";
-import { useRegisterMutation } from "@/features/auth-api-slice"
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
+// import { useRegisterMutation } from "@/features/auth-api-slice"
+// import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -84,7 +84,7 @@ export default function SignUpPage() {
 
     const navigate = useNavigate();
 
-    const [register, { isLoading }] = useRegisterMutation()
+    // const [register, { isLoading }] = useRegisterMutation()
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
