@@ -31,6 +31,8 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch } from "@/hooks/hooks"
 import { setAuth } from "@/features/auth-slice"
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
+import { useLoginMutation } from "@/features/auth-api-slice"
 
 const formSchema = z.object({
         username: z.string().min(1, {
@@ -56,63 +58,45 @@ export default function LoginPage() {
 
     const dispatch = useAppDispatch();
 
+    const [login ] = useLoginMutation()
+
     const navigate = useNavigate();
 
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const { username, password } = values;
-    
         try {
-            const response = await fetch('http://localhost:8000/auth/login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-                credentials:"include"
-            });
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                
-                if (errorData && typeof errorData === "object") {
-                    for (let [_field, errorArray] of Object.entries(errorData)) {
-                        // Use a type assertion for errorArray
-                        const messages = errorArray as string[];
+            await login(values).unwrap()
+
+            dispatch(setAuth()) // Dispatch authentication action
+            toast({
+                description: "Logged in successfully",
+            })
+
+            navigate("/dashboard")
+        } catch (error) {
+            const err = error as FetchBaseQueryError
+
+            if (err?.data && typeof err.data === "object") {
+                for (const [_field, errorArray] of Object.entries(err.data)) {
+                    if (Array.isArray(errorArray)) {
                         toast({
                             variant: "destructive",
-                            className: 'mb-5',
-                            description: `${messages[0]}`
-                        });
+                            className: "mb-5",
+                            description: errorArray[0],
+                        })
                     }
-                } else {
-                    toast({
-                        variant: "destructive",
-                        className: 'mb-5',
-                        description: "An unknown error occurred."
-                    });
                 }
-                return;  // Exit early after handling error
+            } else {
+                toast({
+                    variant: "destructive",
+                    className: "mb-5",
+                    description: "An unexpected error occurred. Please try again.",
+                })
             }
-    
-            dispatch(setAuth());
-            toast({
-                description: "Logged in successfully"
-            });
-    
-            navigate('/dashboard');
-    
-        } catch (error: any) {
-            console.log(error);
-            toast({
-                variant: "destructive",
-                className: 'mb-5',
-                description: "An unexpected error occurred. Please try again."
-            });
         }
-    
-        form.reset();
+
+        form.reset()
     }
     
     
