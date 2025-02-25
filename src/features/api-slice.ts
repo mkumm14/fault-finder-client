@@ -23,7 +23,7 @@ const mutex = new Mutex();
  * Configured to include credentials and use the backend URL from environment variables.
  */
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://api.fault-finder.me',
+    baseUrl: import.meta.env.VITE_BACKEND_URL,
     credentials: 'include',
 });
 

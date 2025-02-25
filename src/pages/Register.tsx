@@ -1,36 +1,10 @@
-/**
- * SignUpPage component handles the user registration process.
- * 
- * This component renders a registration form with fields for username, email, first name, last name, 
- * password, and password confirmation. It uses `react-hook-form` for form state management and validation, 
- * and `zod` for schema validation.
- * 
- * The form data is submitted to a backend endpoint for user registration. If the registration is successful, 
- * the user is navigated to the login page. If there are errors, they are displayed using a toast notification.
- * 
- * @component
- * @example
- * return (
- *   <SignUpPage />
- * )
- * 
- * @returns {JSX.Element} The rendered SignUpPage component.
- * 
- * @remarks
- * - The form uses `zodResolver` for schema validation.
- * - The `useToast` hook is used to display success or error messages.
- * - The `useNavigate` hook from `react-router-dom` is used for navigation after successful registration.
- * 
- * @function
- * @name SignUpPage
- */
-"use client"
+
 
 import { Link, useNavigate } from "react-router-dom"
-import {zodResolver} from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -40,11 +14,10 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
-import {useForm} from "react-hook-form";
-import {useToast} from "@/components/ui/use-toast";
-// import { useRegisterMutation } from "@/features/auth-api-slice"
-// import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
+import { Input } from "@/components/ui/input"
+import { useForm } from "react-hook-form"
+import { useToast } from "@/components/ui/use-toast"
+import { useRegisterMutation } from "@/features/auth-api-slice"
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -63,8 +36,8 @@ const formSchema = z.object({
     path: ["password2"],
     message: "Password don't match",
 });
+
 export default function SignUpPage() {
-    // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -73,83 +46,58 @@ export default function SignUpPage() {
             first_name: "",
             last_name: "",
             password1: "",
-            password2:"",
+            password2: "",
         },
     })
 
-
-
-
-    const {toast} = useToast()
-
-    const navigate = useNavigate();
-
-    // const [register, { isLoading }] = useRegisterMutation()
-
-
+    const { toast } = useToast()
+    const navigate = useNavigate()
+    const [register, { isLoading }] = useRegisterMutation() 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const { first_name, last_name, username, email, password1, password2 } = values;
-    
+        const { first_name, last_name, username, email, password1, password2 } = values
+
         try {
-            const response = await fetch('http://api.fault-finder.me/auth/registration/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    first_name, 
-                    last_name, 
-                    username, 
-                    email, 
-                    password1, 
-                    password2 
-                }),
-                credentials:"include"
-            });
-    
-            const data = await response.json();
-    
-            if (!response.ok) {
-                // Check for any error messages and display them
-                const errors = data as Record<string,string[]>;
-                for (let [_field, errorArray] of Object.entries(errors)) {
+            await register({
+                first_name,
+                last_name,
+                username,
+                email,
+                password1,
+                password2,
+            }).unwrap()
+
+            
+            toast({
+                description: "Registered successfully"
+            })
+            navigate('/login')
+
+        } catch (error: any) {
+            if (error.data && typeof error.data === "object") {
+                for (let [_field, errorArray] of Object.entries(error.data)) {
+                    const messages = errorArray as string[]
                     toast({
                         variant: "destructive",
-                        className:'mb-5',
-                        description:`${errorArray[0]}`
+                        className: 'mb-5',
+                        description: messages[0]
                     })
                 }
             } else {
                 toast({
-                    description: "Registered successfully"
-                });
-                navigate('/login')
-
+                    variant: "destructive",
+                    className: 'mb-5',
+                    description: "An unknown error occurred."
+                })
             }
-
-    
-        } catch (error: any) {
-            console.error("An error occurred:", error);
-            // We'll retain this error message for unexpected errors.
-            toast({
-                variant: "destructive",
-                className: 'mb-5',
-                description: "An unexpected error occurred. Please try again."
-            });
         }
-    
-        form.reset();
+
+        form.reset()
     }
-    
-    
-    
 
     return (
-
         <>
-
             <div className={'flex justify-end items-center m-5 space-x-3'}>
-                <p className={''}>don&apos;t have an account?</p>
+                <p className={''}>Don&apos;t have an account?</p>
                 <Button asChild>
                     <Link to={'/login'}>Login</Link>
                 </Button>
@@ -162,7 +110,7 @@ export default function SignUpPage() {
                         <FormField
                             control={form.control}
                             name="username"
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Username</FormLabel>
                                     <FormControl>
@@ -171,7 +119,7 @@ export default function SignUpPage() {
                                     <FormDescription>
                                         Username should be 3 characters long.
                                     </FormDescription>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -179,13 +127,13 @@ export default function SignUpPage() {
                             <FormField
                                 control={form.control}
                                 name="first_name"
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>First Name</FormLabel>
                                         <FormControl>
                                             <Input placeholder="first name" {...field} />
                                         </FormControl>
-                                        <FormMessage/>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
@@ -193,63 +141,63 @@ export default function SignUpPage() {
                             <FormField
                                 control={form.control}
                                 name="last_name"
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Last Name</FormLabel>
                                         <FormControl>
                                             <Input placeholder="last name" {...field} />
                                         </FormControl>
-                                        <FormMessage/>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            </span>
+                        </span>
 
                         <FormField
                             control={form.control}
                             name="email"
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
                                         <Input placeholder="email" {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name="password1"
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input placeholder="password1" type={'password'} {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name="password2"
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Confirm Password</FormLabel>
                                     <FormControl>
                                         <Input placeholder="password2" type={'password'} {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" disabled={isLoading}>
+                            {isLoading ? "Submitting..." : "Submit"}
+                        </Button>
                     </form>
                 </Form>
             </div>
         </>
     )
 }
-
-
